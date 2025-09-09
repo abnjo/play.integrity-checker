@@ -1,0 +1,246 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Play Integrity API Checker — 200</title>
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --panel:#0f0f0f;
+      --muted:#9aa0a6;
+      --accent:#39b54a; /* green */
+      --glass: rgba(255,255,255,0.03);
+      --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background:linear-gradient(180deg,#070707 0%, #0c0c0c 60%);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:20px 12px;
+    }.frame{
+  width:360px;
+  max-height: calc(100vh - 40px);
+  background:var(--panel);
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+header{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+}
+.title{
+  font-weight:600;
+  font-size:18px;
+  letter-spacing:0.2px;
+}
+.spacer{flex:1}
+
+.content{
+  padding:18px 18px 12px 18px;
+  overflow:auto;
+}
+
+.check-list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  padding-bottom:18px;
+}
+
+.check-item{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.check-dot{
+  min-width:44px;
+  min-height:44px;
+  border-radius:50%;
+  background:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(255,255,255,0.02));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.35) inset;
+  border:3px solid rgba(0,0,0,0.2);
+}
+.check-dot svg{width:26px;height:26px;}
+
+.label{
+  font-weight:700;
+  font-size:15px;
+  color:#e6e6e6;
+  text-transform:uppercase;
+  letter-spacing:0.6px;
+}
+
+.btn-row{
+  display:flex;
+  justify-content:center;
+  padding:14px 18px 20px 18px;
+  border-top:1px solid rgba(255,255,255,0.03);
+  background:linear-gradient(0deg, rgba(255,255,255,0.01), transparent);
+}
+.check-btn{
+  padding:10px 28px;
+  border-radius:6px;
+  background:transparent;
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.06);
+  letter-spacing:1px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,0.6);
+}
+
+
+/* make the labels sticky-looking */
+.check-item .label-secondary{
+  font-weight:500;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:2px;
+  text-transform:none;
+}
+
+/* scrollbar style */
+.content::-webkit-scrollbar{width:10px}
+.content::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.03);border-radius:10px}
+
+footer.note{font-size:12px;color:var(--muted);padding:8px 16px;text-align:center}
+
+  </style>
+</head>
+<body>
+  <div class="frame" role="application">
+    <header>
+      <!-- left icons like <> and menu -->
+      <div style="display:flex;align-items:center;gap:8px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><div class="title">Play Integrity API Checker</div>
+  <div class="spacer"></div>
+</header>
+
+<main class="content" id="main">
+  <div class="check-list" id="list">
+    <!-- items will be injected by JS -->
+  </div>
+</main>
+
+<div class="btn-row">
+  <button class="check-btn" id="checkBtn">CHECK</button>
+</div>
+
+  </div>  <script>
+    // Generate 200 absurd integrity check names
+    const names = [
+      'MEETS_LOWEST_INTEGRITY', 'MEETS_BASIC_INTEGRITY', 'MEETS_DEVICE_INTEGRITY', 'MEETS_STRONG_INTEGRITY', 'MEETS_OVERPOWER_INTEGRITY', 'MEETS_GOD_INTEGRITY'
+    ];
+
+    // we'll produce additional absurd and playful names programmatically
+    const oddAdjectives = [
+      'UNICORN_PROOF','QUANTUM_SHIFTED','COSMIC_BREAD','BANANA_PROOF','RUBBER_SOUL','GLITCHLESS','SPOOKY_SAFE','PLASMA_CERTIFIED',
+      'FUNKY_TOWN','HONEYCOMB','NEBULA_GRADE','OMEGA_LOCKED','PENGUIN_APPROVED','HYPERTHREAD','SENTIENT_OK','MIMOSA_SAFE',
+      'FLOATING_POINT','PARADOX_FREE','SILVER_LINED','ARCADE_READY','MOTLEY_CHECKED','PIXEL_PERFECT','POLAR_BEAR','STARLIT','LAVA_PROOF',
+      'MARSHMALLOW','CIRCUIT_SEALED','ECHO_PROOF','TIMEWARP_SAFE','LUMINOUS','GHOSTED','TACO_CERTIFIED','NINJA_VETTED',
+      'MERMAID_TESTED','FIREPROOF','WORMHOLE_CLEAR','PLATINUM_TIER','SHEEPDOG','HEDGEHOG_SAFE','MATRIX_OK','BAKED_GOOD',
+      'LOL_VERIFIED','SLEEPY_CAT','JELLYFISH_GRADE','CRUNCHY','SANDWICHED','TURBO_CHARGED','MYSTIC','DRAGON_PROOF',
+      'HYPERCUBE','PAPERCLIP_SAFE','EINSTEIN_APPROVED','ZEN_MODE','CLOUDBACKED','SYNTHWAVE','HOLOGRAPHIC','ONYX_LEVEL',
+      'RAINBOW_TOLERANT','GOLDEN_RATIO','SANDSTONE','CANDY_COATED','COBALT','SATURN_RINGED','SECRET_SAUCE','WONDERFUL',
+      'GUMDROP','PARAFFIN_SEALED','BATMAN_COMPATIBLE','SPAGHETTI_TESTED','CRYSTAL_CLEAR','HARBOR_SECURE','ZERO_POINT','MOJITO_SAFE'
+    ];
+
+    // fill until 200 unique names
+    const finalNames = [];
+    // start with some canonical ones
+    names.forEach(n=>finalNames.push(n));
+
+    let idx = 0;
+    while(finalNames.length < 200){
+      const a = oddAdjectives[idx % oddAdjectives.length];
+      const suffix = Math.floor(idx/oddAdjectives.length)+1; // to diversify
+      const candidate = `MEETS_${a}${suffix>1?('_'+suffix):''}_INTEGRITY`;
+      if(!finalNames.includes(candidate)) finalNames.push(candidate);
+      idx++;
+      // just in case, add fallback
+      if(idx>10000) break;
+    }
+
+    // sanity: ensure exactly 200
+    finalNames.length = 200;
+
+    const list = document.getElementById('list');
+
+    function makeCheckRow(label){
+      const item = document.createElement('div');
+      item.className = 'check-item';
+
+      const dot = document.createElement('div');
+      dot.className = 'check-dot';
+      // green check svg
+      dot.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="12" cy="12" r="11" stroke="var(--accent)" stroke-width="2" fill="var(--accent)" fill-opacity="0.12" />
+          <path d="M6 12.2l3.2 3.2L18 6" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`;
+
+      const text = document.createElement('div');
+      text.className = 'label';
+      text.textContent = label;
+
+      item.appendChild(dot);
+      item.appendChild(text);
+      return item;
+    }
+
+    // populate
+    finalNames.forEach(n=>{
+      list.appendChild(makeCheckRow(n));
+    });
+
+    // button playful behaviour: toggle random ones to fail/pass
+    const btn = document.getElementById('checkBtn');
+    btn.addEventListener('click', ()=>{
+      // pick 3 random indexes to 'fail' and flip their icon color to red briefly
+      const failures = new Set();
+      while(failures.size < 3){ failures.add(Math.floor(Math.random()*finalNames.length)); }
+
+      // animate
+      const items = document.querySelectorAll('.check-item');
+      items.forEach((it, i)=>{
+        const svg = it.querySelector('svg');
+        if(failures.has(i)){
+          svg.querySelector('circle').setAttribute('stroke','tomato');
+          svg.querySelector('path').setAttribute('stroke','tomato');
+          it.querySelector('.label').style.color = 'tomato';
+        } else {
+          svg.querySelector('circle').setAttribute('stroke','var(--accent)');
+          svg.querySelector('path').setAttribute('stroke','var(--accent)');
+          it.querySelector('.label').style.color = '#e6e6e6';
+        }
+      });
+
+      // small press effect
+      btn.textContent = 'CHECKED';
+      setTimeout(()=> btn.textContent = 'CHECK', 900);
+    });
+
+    // ensure main is scrolled to top on load
+    document.getElementById('main').scrollTop = 0;
+  </script></body>
+</html>
