@@ -32,7 +32,7 @@ HTML5 for structure.
 
 CSS3 (with custom properties and gradients) for styling.
 
-Vanilla JavaScript for dynamic generation of checks and api requests.
+Vanilla JavaScript for dynamic fetch and ammendment of checks from google itself and api requests.
 
 ---
 
@@ -45,7 +45,7 @@ we are not responsible for it, if you happen to brick your device with this web 
 
 📜 License
 
-MIT License. Free to use, remix, and laugh at.
+MIT License.
 
 
 ---
