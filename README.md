@@ -20,7 +20,7 @@ A web all for checking you device integrity levels using Google's Play Integrity
 
 🚀 Usage
 
-1. go to the hosted webpage 
+1. go to the hosted https://abnjo.github.io/play.integrity-checker/
 2. Scroll through the integrity checks to the check button beneath
 4. Click CHECK to test results.
 
