@@ -1,6 +1,6 @@
 Play Integrity API Checker
 
-A web all for checking you device integrity levels using Google's Play IntegrityAPI,universally compatible super efficient, super fast.
+A web all for checking you device integrity levels using Google's Play IntegrityAPI,universally compatible, super efficient, super fast.
 
 ---
 
